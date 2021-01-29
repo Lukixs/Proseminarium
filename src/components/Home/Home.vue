@@ -19,6 +19,133 @@
         <b-col lg="4" sm="12" class="prosemi-column"
           ><div class="prosemi-row">
             <div class="buttonCage">
+              <p>Wczytaj dane z pliku</p>
+              <b-button
+                v-if="!loadingMySQL.insertFromFile"
+                variant="success"
+                @click="mysqlInsertFromFile"
+                :disabled="isLoading"
+                >Wykonaj</b-button
+              >
+              <b-button v-else variant="success" disabled>
+                <b-icon
+                  icon="arrow-clockwise"
+                  animation="spin"
+                  font-scale="1"
+                ></b-icon
+              ></b-button>
+            </div>
+          </div>
+        </b-col>
+        <b-col lg="4" sm="12" class="prosemi-column"
+          ><div class="prosemi-row">
+            <div
+              class="resultCage"
+              v-if="
+                mySQL.insertFromFile != null ||
+                  clickHouse.insertFromFile != null
+              "
+            >
+              <span v-if="mySQL.insertFromFile != null"
+                >{{ mySQL.insertFromFile }}ms</span
+              >
+              <span> : </span>
+              <span v-if="clickHouse.insertFromFile != null"
+                >{{ clickHouse.insertFromFile }}ms</span
+              >
+            </div>
+          </div>
+        </b-col>
+        <b-col lg="4" sm="12" class="prosemi-column">
+          <div class="prosemi-row">
+            <div class="buttonCage">
+              <p>Wczytaj dane z pliku</p>
+              <b-button
+                variant="success"
+                :disabled="isLoading"
+                @click="clickHouseInsertFromFile"
+                v-if="!loadingClickHouse.insertFromFile"
+                >Wykonaj</b-button
+              >
+              <b-button v-else variant="success" disabled>
+                <b-icon
+                  icon="arrow-clockwise"
+                  animation="spin"
+                  font-scale="1"
+                ></b-icon
+              ></b-button>
+            </div>
+          </div>
+        </b-col>
+      </b-row>
+
+      <b-row>
+        <b-col lg="4" sm="12" class="prosemi-column"
+          ><div class="prosemi-row">
+            <div class="buttonCage">
+              <p>Usuń wszystkie dane z tabeli</p>
+              <b-button
+                v-if="!loadingMySQL.deleteAll"
+                variant="danger"
+                @click="mysqlDeleteAllData"
+                :disabled="isLoading"
+                >Wykonaj</b-button
+              >
+              <b-button v-else variant="danger" disabled>
+                <b-icon
+                  icon="arrow-clockwise"
+                  animation="spin"
+                  font-scale="1"
+                ></b-icon
+              ></b-button>
+            </div>
+          </div>
+        </b-col>
+        <b-col lg="4" sm="12" class="prosemi-column"
+          ><div class="prosemi-row">
+            <div
+              class="resultCage"
+              v-if="mySQL.deleteAll != null || clickHouse.deleteAll != null"
+            >
+              <span v-if="mySQL.deleteAll != null"
+                >{{ mySQL.deleteAll }}ms</span
+              >
+              <span> : </span>
+              <span v-if="clickHouse.deleteAll != null"
+                >{{ clickHouse.deleteAll }}ms</span
+              >
+            </div>
+          </div>
+        </b-col>
+        <b-col lg="4" sm="12" class="prosemi-column">
+          <div class="prosemi-row">
+            <div class="buttonCage">
+              <p>Usuń wszystkie dane z tabeli</p>
+              <b-button
+                variant="danger"
+                :disabled="isLoading"
+                @click="clickHouseDeleteAll"
+                v-if="!loadingClickHouse.deleteAll"
+                >Wykonaj</b-button
+              >
+              <b-button v-else variant="danger" disabled>
+                <b-icon
+                  icon="arrow-clockwise"
+                  animation="spin"
+                  font-scale="1"
+                ></b-icon
+              ></b-button>
+            </div>
+          </div>
+        </b-col>
+      </b-row>
+
+      <hr />
+
+      <b-row>
+        <b-col lg="4" sm="12" class="prosemi-column"
+          ><div class="prosemi-row">
+            <div class="buttonCage">
               <p>Wyświetl milion rekordów z tabeli</p>
               <b-button
                 v-if="!loadingMySQL.show"
@@ -201,67 +328,6 @@
         <b-col lg="4" sm="12" class="prosemi-column">
           <div class="prosemi-row">
             <div class="buttonCage">
-              <p>Wykonaj polecenie select</p>
-              <b-button
-                v-if="!loadingMySQL.select"
-                variant="primary"
-                @click="mysqlSelect"
-                :disabled="isLoading"
-                >Wykonaj</b-button
-              >
-              <b-button v-else variant="primary" disabled
-                ><b-icon
-                  icon="arrow-clockwise"
-                  animation="spin"
-                  font-scale="1"
-                ></b-icon
-              ></b-button>
-            </div>
-          </div>
-        </b-col>
-        <b-col lg="4" sm="12" class="prosemi-column"
-          ><div class="prosemi-row">
-            <div
-              class="resultCage"
-              v-if="mySQL.select != null || clickHouse.select != null"
-            >
-              <span v-if="mySQL.select != null">{{ mySQL.select }}ms</span>
-              <span> : </span>
-              <span v-if="clickHouse.select != null"
-                >{{ clickHouse.select }}ms</span
-              >
-            </div>
-          </div></b-col
-        >
-        <b-col lg="4" sm="12" class="prosemi-column">
-          <div class="prosemi-row">
-            <div class="buttonCage">
-              <p>Wykonaj polecenie select</p>
-              <b-button
-                v-if="!loadingClickHouse.select"
-                variant="primary"
-                @click="clickHouseSelect"
-                :disabled="isLoading"
-                >Wykonaj</b-button
-              >
-              <b-button v-else variant="primary" disabled
-                ><b-icon
-                  icon="arrow-clockwise"
-                  animation="spin"
-                  font-scale="1"
-                ></b-icon
-              ></b-button>
-            </div>
-          </div>
-        </b-col>
-      </b-row>
-
-      <hr />
-
-      <b-row>
-        <b-col lg="4" sm="12" class="prosemi-column">
-          <div class="prosemi-row">
-            <div class="buttonCage">
               <p>Zaktualizuj losowy rekord</p>
               <b-button
                 v-if="!loadingMySQL.update"
@@ -316,6 +382,189 @@
           </div>
         </b-col>
       </b-row>
+
+      <hr />
+
+      <b-row>
+        <b-col lg="4" sm="12" class="prosemi-column">
+          <div class="prosemi-row">
+            <div class="buttonCage">
+              <p>Złożone zapytanie SELECT</p>
+              <b-button
+                v-if="!loadingMySQL.select"
+                variant="primary"
+                @click="mysqlSelect"
+                :disabled="isLoading"
+                >Wykonaj</b-button
+              >
+              <b-button v-else variant="primary" disabled
+                ><b-icon
+                  icon="arrow-clockwise"
+                  animation="spin"
+                  font-scale="1"
+                ></b-icon
+              ></b-button>
+            </div>
+          </div>
+        </b-col>
+        <b-col lg="4" sm="12" class="prosemi-column"
+          ><div class="prosemi-row">
+            <div
+              class="resultCage"
+              v-if="mySQL.select != null || clickHouse.select != null"
+            >
+              <span v-if="mySQL.select != null">{{ mySQL.select }}ms</span>
+              <span> : </span>
+              <span v-if="clickHouse.select != null"
+                >{{ clickHouse.select }}ms</span
+              >
+            </div>
+          </div></b-col
+        >
+        <b-col lg="4" sm="12" class="prosemi-column">
+          <div class="prosemi-row">
+            <div class="buttonCage">
+              <p>Złożone zapytanie SELECT</p>
+              <b-button
+                v-if="!loadingClickHouse.select"
+                variant="primary"
+                @click="clickHouseSelect"
+                :disabled="isLoading"
+                >Wykonaj</b-button
+              >
+              <b-button v-else variant="primary" disabled
+                ><b-icon
+                  icon="arrow-clockwise"
+                  animation="spin"
+                  font-scale="1"
+                ></b-icon
+              ></b-button>
+            </div>
+          </div>
+        </b-col>
+      </b-row>
+
+      <hr />
+
+      <b-row>
+        <b-col lg="4" sm="12" class="prosemi-column">
+          <div class="prosemi-row">
+            <div class="buttonCage">
+              <p>Zapytanie SELECT z wykorzystaniem GROUP</p>
+              <b-button
+                v-if="!loadingMySQL.group"
+                variant="primary"
+                @click="mysqlGroup"
+                :disabled="isLoading"
+                >Wykonaj</b-button
+              >
+              <b-button v-else variant="primary" disabled
+                ><b-icon
+                  icon="arrow-clockwise"
+                  animation="spin"
+                  font-scale="1"
+                ></b-icon
+              ></b-button>
+            </div>
+          </div>
+        </b-col>
+        <b-col lg="4" sm="12" class="prosemi-column"
+          ><div class="prosemi-row">
+            <div
+              class="resultCage"
+              v-if="mySQL.group != null || clickHouse.group != null"
+            >
+              <span v-if="mySQL.group != null">{{ mySQL.group }}ms</span>
+              <span> : </span>
+              <span v-if="clickHouse.group != null"
+                >{{ clickHouse.group }}ms</span
+              >
+            </div>
+          </div></b-col
+        >
+        <b-col lg="4" sm="12" class="prosemi-column">
+          <div class="prosemi-row">
+            <div class="buttonCage">
+              <p>Zapytanie SELECT z wykorzystaniem GROUP</p>
+              <b-button
+                v-if="!loadingClickHouse.group"
+                variant="primary"
+                @click="clickHouseGroup"
+                :disabled="isLoading"
+                >Wykonaj</b-button
+              >
+              <b-button v-else variant="primary" disabled
+                ><b-icon
+                  icon="arrow-clockwise"
+                  animation="spin"
+                  font-scale="1"
+                ></b-icon
+              ></b-button>
+            </div>
+          </div>
+        </b-col>
+      </b-row>
+
+      <hr />
+
+      <b-row>
+        <b-col lg="4" sm="12" class="prosemi-column">
+          <div class="prosemi-row">
+            <div class="buttonCage">
+              <p>Zapytanie SELECT z wykorzystaniem WHERE</p>
+              <b-button
+                v-if="!loadingMySQL.where"
+                variant="primary"
+                @click="mysqlWhere"
+                :disabled="isLoading"
+                >Wykonaj</b-button
+              >
+              <b-button v-else variant="primary" disabled
+                ><b-icon
+                  icon="arrow-clockwise"
+                  animation="spin"
+                  font-scale="1"
+                ></b-icon
+              ></b-button>
+            </div>
+          </div>
+        </b-col>
+        <b-col lg="4" sm="12" class="prosemi-column"
+          ><div class="prosemi-row">
+            <div
+              class="resultCage"
+              v-if="mySQL.where != null || clickHouse.where != null"
+            >
+              <span v-if="mySQL.where != null">{{ mySQL.where }}ms</span>
+              <span> : </span>
+              <span v-if="clickHouse.where != null"
+                >{{ clickHouse.where }}ms</span
+              >
+            </div>
+          </div></b-col
+        >
+        <b-col lg="4" sm="12" class="prosemi-column">
+          <div class="prosemi-row">
+            <div class="buttonCage">
+              <p>Zapytanie SELECT z wykorzystaniem WHERE</p>
+              <b-button
+                v-if="!loadingClickHouse.where"
+                variant="primary"
+                @click="clickHouseWhere"
+                :disabled="isLoading"
+                >Wykonaj</b-button
+              >
+              <b-button v-else variant="primary" disabled
+                ><b-icon
+                  icon="arrow-clockwise"
+                  animation="spin"
+                  font-scale="1"
+                ></b-icon
+              ></b-button>
+            </div>
+          </div>
+        </b-col>
+      </b-row>
     </b-container>
   </div>
 </template>
@@ -329,41 +578,95 @@ export default {
     return {
       isLoading: false,
       mySQL: {
+        insertFromFile: null,
+        deleteAll: null,
         show: null,
         insert: null,
         delete: null,
         select: null,
         update: null,
+        group: null,
+        where: null,
         allAbove: null,
       },
       clickHouse: {
+        insertFromFile: null,
+        deleteAll: null,
         show: null,
         insert: null,
         delete: null,
         select: null,
         update: null,
+        group: null,
+        where: null,
         allAbove: null,
       },
       loadingMySQL: {
+        insertFromFile: false,
+        deleteAll: false,
         show: false,
         insert: false,
         delete: false,
         select: false,
         update: false,
+        group: false,
+        where: false,
         allAbove: false,
       },
       loadingClickHouse: {
+        insertFromFile: false,
+        deleteAll: false,
         show: false,
         insert: false,
         delete: false,
         select: false,
         update: false,
+        group: false,
+        where: false,
         allAbove: false,
       },
     };
   },
   components: {},
   methods: {
+    async mysqlDeleteAllData() {
+      try {
+        this.isLoading = true;
+        this.loadingMySQL.deleteAll = true;
+        const response = await axios.get(
+          "http://localhost:8082/mysql/delete-all-data-in-the-table"
+        );
+
+        console.log("Insert files from file!");
+        this.mySQL.deleteAll = response.data.czasOpreacji;
+        this.isLoading = false;
+        this.loadingMySQL.deleteAll = false;
+      } catch (error) {
+        this.isLoading = false;
+        this.loadingMySQL.deleteAll = false;
+        console.log(error);
+      }
+    },
+
+    async mysqlInsertFromFile() {
+      try {
+        this.isLoading = true;
+        this.loadingMySQL.insertFromFile = true;
+        const response = await axios.get(
+          "http://localhost:8082/mysql/insert-from-file"
+        );
+
+        console.log("Insert files from file!");
+        this.mySQL.insertFromFile = response.data.czasOpreacji;
+        this.isLoading = false;
+        this.loadingMySQL.insertFromFile = false;
+      } catch (error) {
+        this.isLoading = false;
+        this.loadingMySQL.insertFromFile = false;
+        console.log(error);
+      }
+    },
+
     async mysqlShowMilion() {
       try {
         this.isLoading = true;
@@ -418,6 +721,26 @@ export default {
         console.log(error);
       }
     },
+
+    async mysqlUpdateRandom() {
+      try {
+        this.isLoading = true;
+        this.loadingMySQL.update = true;
+        const response = await axios.get(
+          "http://localhost:8082/mysql/update-random"
+        );
+
+        console.log("Update!");
+        this.mySQL.update = response.data.czasOpreacji;
+        this.isLoading = false;
+        this.loadingMySQL.update = false;
+      } catch (error) {
+        this.isLoading = false;
+        this.loadingMySQL.update = false;
+        console.log(error);
+      }
+    },
+
     async mysqlSelect() {
       try {
         this.isLoading = true;
@@ -435,21 +758,76 @@ export default {
       }
     },
 
-    async mysqlUpdateRandom() {
+    async mysqlGroup() {
       try {
         this.isLoading = true;
-        this.loadingMySQL.update = true;
-        const response = await axios.get(
-          "http://localhost:8082/mysql/update-random"
-        );
+        this.loadingMySQL.group = true;
+        const response = await axios.get("http://localhost:8082/mysql/group");
 
-        console.log("Update!");
-        this.mySQL.update = response.data.czasOpreacji;
+        console.log("Select by GROUP!");
+        this.mySQL.group = response.data.czasOpreacji;
         this.isLoading = false;
-        this.loadingMySQL.update = false;
+        this.loadingMySQL.group = false;
       } catch (error) {
         this.isLoading = false;
-        this.loadingMySQL.update = false;
+        this.loadingMySQL.group = false;
+        console.log(error);
+      }
+    },
+
+    async mysqlWhere() {
+      try {
+        this.isLoading = true;
+        this.loadingMySQL.where = true;
+        const response = await axios.get("http://localhost:8082/mysql/where");
+
+        console.log("Select by GROUP!");
+        this.mySQL.where = response.data.czasOpreacji;
+        this.isLoading = false;
+        this.loadingMySQL.where = false;
+      } catch (error) {
+        this.isLoading = false;
+        this.loadingMySQL.where = false;
+        console.log(error);
+      }
+    },
+
+    // ==================================================================================
+
+    async clickHouseDeleteAll() {
+      try {
+        this.isLoading = true;
+        this.loadingClickHouse.deleteAll = true;
+        const response = await axios.get(
+          "http://localhost:8081/click/delete-all-data-in-the-table"
+        );
+
+        console.log("Insert files from file");
+        this.clickHouse.deleteAll = response.data.czasOpreacji;
+        this.isLoading = false;
+        this.loadingClickHouse.deleteAll = false;
+      } catch (error) {
+        this.isLoading = false;
+        this.loadingClickHouse.deleteAll = false;
+        console.log(error);
+      }
+    },
+
+    async clickHouseInsertFromFile() {
+      try {
+        this.isLoading = true;
+        this.loadingClickHouse.insertFromFile = true;
+        const response = await axios.get(
+          "http://localhost:8081/click/insert-from-file"
+        );
+
+        console.log("Insert files from file");
+        this.clickHouse.insertFromFile = response.data.czasOpreacji;
+        this.isLoading = false;
+        this.loadingClickHouse.insertFromFile = false;
+      } catch (error) {
+        this.isLoading = false;
+        this.loadingClickHouse.insertFromFile = false;
         console.log(error);
       }
     },
@@ -509,6 +887,25 @@ export default {
       }
     },
 
+    async clickHouseUpdateRandom() {
+      try {
+        this.isLoading = true;
+        this.loadingClickHouse.update = true;
+        const response = await axios.get(
+          "http://localhost:8081/click/updateRandom"
+        );
+
+        console.log("Update Random!");
+        this.clickHouse.update = response.data.czasOpreacji;
+        this.isLoading = false;
+        this.loadingClickHouse.update = false;
+      } catch (error) {
+        this.isLoading = false;
+        this.loadingClickHouse.update = false;
+        console.log(error);
+      }
+    },
+
     async clickHouseSelect() {
       try {
         this.isLoading = true;
@@ -526,21 +923,36 @@ export default {
       }
     },
 
-    async clickHouseUpdateRandom() {
+    async clickHouseGroup() {
       try {
         this.isLoading = true;
-        this.loadingClickHouse.update = true;
-        const response = await axios.get(
-          "http://localhost:8081/click/updateRandom"
-        );
+        this.loadingClickHouse.group = true;
+        const response = await axios.get("http://localhost:8081/click/group");
 
-        console.log("Update Random!");
-        this.clickHouse.update = response.data.czasOpreacji;
+        console.log("Select WHERE!");
+        this.clickHouse.group = response.data.czasOpreacji;
         this.isLoading = false;
-        this.loadingClickHouse.update = false;
+        this.loadingClickHouse.group = false;
       } catch (error) {
         this.isLoading = false;
-        this.loadingClickHouse.update = false;
+        this.loadingClickHouse.group = false;
+        console.log(error);
+      }
+    },
+
+    async clickHouseWhere() {
+      try {
+        this.isLoading = true;
+        this.loadingClickHouse.where = true;
+        const response = await axios.get("http://localhost:8081/click/where");
+
+        console.log("Select WHERE!");
+        this.clickHouse.where = response.data.czasOpreacji;
+        this.isLoading = false;
+        this.loadingClickHouse.where = false;
+      } catch (error) {
+        this.isLoading = false;
+        this.loadingClickHouse.where = false;
         console.log(error);
       }
     },
