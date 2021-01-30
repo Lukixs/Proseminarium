@@ -16,6 +16,44 @@
       <hr />
 
       <b-row>
+        <b-col lg="4" sm="12" class="prosemi-column">
+          <div class="prosemi-row">
+            <div>
+              <span>Ilość rekordów w bazie</span>
+            </div>
+          </div></b-col
+        >
+        <b-col lg="4" sm="12" class="prosemi-column">
+          <div class="prosemi-row">
+            <div
+              class="resultCage"
+              v-if="
+                mySQL.numberOfRecords != null ||
+                  clickHouse.numberOfRecords != null
+              "
+            >
+              <span v-if="mySQL.numberOfRecords != null">{{
+                mySQL.numberOfRecords
+              }}</span>
+              <span> : </span>
+              <span v-if="clickHouse.numberOfRecords != null">{{
+                clickHouse.numberOfRecords
+              }}</span>
+            </div>
+          </div>
+        </b-col>
+        <b-col lg="4" sm="12" class="prosemi-column">
+          <div class="prosemi-row">
+            <div>
+              <span>Ilość rekordów w bazie</span>
+            </div>
+          </div></b-col
+        >
+      </b-row>
+
+      <hr />
+
+      <b-row>
         <b-col lg="4" sm="12" class="prosemi-column"
           ><div class="prosemi-row">
             <div class="buttonCage">
@@ -588,6 +626,7 @@ export default {
         group: null,
         where: null,
         allAbove: null,
+        numberOfRecords: null,
       },
       clickHouse: {
         insertFromFile: null,
@@ -600,6 +639,7 @@ export default {
         group: null,
         where: null,
         allAbove: null,
+        numberOfRecords: null,
       },
       loadingMySQL: {
         insertFromFile: false,
@@ -639,6 +679,7 @@ export default {
 
         console.log("Insert files from file!");
         this.mySQL.deleteAll = response.data.czasOpreacji;
+        this.mySQL.numberOfRecords = response.data.iloscDanych;
         this.isLoading = false;
         this.loadingMySQL.deleteAll = false;
       } catch (error) {
@@ -658,6 +699,7 @@ export default {
 
         console.log("Insert files from file!");
         this.mySQL.insertFromFile = response.data.czasOpreacji;
+        this.mySQL.numberOfRecords = response.data.iloscDanych;
         this.isLoading = false;
         this.loadingMySQL.insertFromFile = false;
       } catch (error) {
@@ -675,6 +717,7 @@ export default {
 
         console.log("Create!");
         this.mySQL.show = response.data.czasOpreacji;
+        this.mySQL.numberOfRecords = response.data.iloscDanych;
         this.isLoading = false;
         this.loadingMySQL.show = false;
       } catch (error) {
@@ -694,6 +737,7 @@ export default {
 
         console.log("Delete!");
         this.mySQL.insert = response.data.czasOpreacji;
+        this.mySQL.numberOfRecords = response.data.iloscDanych;
         this.isLoading = false;
         this.loadingMySQL.insert = false;
       } catch (error) {
@@ -713,6 +757,7 @@ export default {
 
         console.log("Update!");
         this.mySQL.delete = response.data.czasOpreacji;
+        this.mySQL.numberOfRecords = response.data.iloscDanych;
         this.isLoading = false;
         this.loadingMySQL.delete = false;
       } catch (error) {
@@ -732,6 +777,7 @@ export default {
 
         console.log("Update!");
         this.mySQL.update = response.data.czasOpreacji;
+        this.mySQL.numberOfRecords = response.data.iloscDanych;
         this.isLoading = false;
         this.loadingMySQL.update = false;
       } catch (error) {
@@ -749,6 +795,7 @@ export default {
 
         console.log("Update!");
         this.mySQL.select = response.data.czasOpreacji;
+        this.mySQL.numberOfRecords = response.data.iloscDanych;
         this.isLoading = false;
         this.loadingMySQL.select = false;
       } catch (error) {
@@ -766,6 +813,7 @@ export default {
 
         console.log("Select by GROUP!");
         this.mySQL.group = response.data.czasOpreacji;
+        this.mySQL.numberOfRecords = response.data.iloscDanych;
         this.isLoading = false;
         this.loadingMySQL.group = false;
       } catch (error) {
@@ -783,6 +831,7 @@ export default {
 
         console.log("Select by GROUP!");
         this.mySQL.where = response.data.czasOpreacji;
+        this.mySQL.numberOfRecords = response.data.iloscDanych;
         this.isLoading = false;
         this.loadingMySQL.where = false;
       } catch (error) {
@@ -804,6 +853,7 @@ export default {
 
         console.log("Insert files from file");
         this.clickHouse.deleteAll = response.data.czasOpreacji;
+        this.clickHouse.numberOfRecords = response.data.iloscDanych;
         this.isLoading = false;
         this.loadingClickHouse.deleteAll = false;
       } catch (error) {
@@ -823,6 +873,7 @@ export default {
 
         console.log("Insert files from file");
         this.clickHouse.insertFromFile = response.data.czasOpreacji;
+        this.clickHouse.numberOfRecords = response.data.iloscDanych;
         this.isLoading = false;
         this.loadingClickHouse.insertFromFile = false;
       } catch (error) {
@@ -840,6 +891,7 @@ export default {
 
         console.log("Show milion records!");
         this.clickHouse.show = response.data.czasOpreacji;
+        this.clickHouse.numberOfRecords = response.data.iloscDanych;
         this.isLoading = false;
         this.loadingClickHouse.show = false;
       } catch (error) {
@@ -859,6 +911,7 @@ export default {
 
         console.log("Insert random!");
         this.clickHouse.insert = response.data.czasOpreacji;
+        this.clickHouse.numberOfRecords = response.data.iloscDanych;
         this.isLoading = false;
         this.loadingClickHouse.insert = false;
       } catch (error) {
@@ -878,6 +931,7 @@ export default {
 
         console.log("Delete random!");
         this.clickHouse.delete = response.data.czasOpreacji;
+        this.clickHouse.numberOfRecords = response.data.iloscDanych;
         this.isLoading = false;
         this.loadingClickHouse.delete = false;
       } catch (error) {
@@ -897,6 +951,7 @@ export default {
 
         console.log("Update Random!");
         this.clickHouse.update = response.data.czasOpreacji;
+        this.clickHouse.numberOfRecords = response.data.iloscDanych;
         this.isLoading = false;
         this.loadingClickHouse.update = false;
       } catch (error) {
@@ -914,6 +969,7 @@ export default {
 
         console.log("Execute select!");
         this.clickHouse.select = response.data.czasOpreacji;
+        this.clickHouse.numberOfRecords = response.data.iloscDanych;
         this.isLoading = false;
         this.loadingClickHouse.select = false;
       } catch (error) {
@@ -931,6 +987,7 @@ export default {
 
         console.log("Select WHERE!");
         this.clickHouse.group = response.data.czasOpreacji;
+        this.clickHouse.numberOfRecords = response.data.iloscDanych;
         this.isLoading = false;
         this.loadingClickHouse.group = false;
       } catch (error) {
@@ -948,6 +1005,7 @@ export default {
 
         console.log("Select WHERE!");
         this.clickHouse.where = response.data.czasOpreacji;
+        this.clickHouse.numberOfRecords = response.data.iloscDanych;
         this.isLoading = false;
         this.loadingClickHouse.where = false;
       } catch (error) {
